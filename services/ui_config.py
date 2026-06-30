@@ -26,8 +26,16 @@ def ocultar_menu_streamlit():
         border-right:1px solid #202020;
     }
 
-    section[data-testid="stSidebar"] *{
+    section[data-testid="stSidebar"] .stMarkdown,
+    section[data-testid="stSidebar"] .stText,
+    section[data-testid="stSidebar"] p,
+    section[data-testid="stSidebar"] span{
         color:white;
+    }
+
+    .main {
+        visibility: visible !important;
+        display: block !important;
     }
 
     .stButton > button{
