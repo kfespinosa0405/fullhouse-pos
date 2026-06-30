@@ -88,27 +88,62 @@ st.divider()
 
 st.subheader("Opciones")
 
+# Inicializar estados de sesión para los botones
+if "pdf_generating" not in st.session_state:
+    st.session_state.pdf_generating = False
+if "caja_closing" not in st.session_state:
+    st.session_state.caja_closing = False
+
 col1, col2 = st.columns(2)
 
-# Usar los botones de las columnas para que se rendericen correctamente dentro de cada columna
-if col1.button("📄 Descargar PDF", key="descargar_pdf"):
-    # Aquí podrías llamar a la función que genere y descargue el PDF
-    # Ejemplo: generar_pdf_y_descargar(datos)
-    with st.spinner("Generando PDF..."):
-        try:
-            # llamar a la función real para generar y descargar el PDF
-            # generar_pdf_y_descargar(ventas, total)
-            st.success("PDF generado y listo para descargar (placeholder).")
-        except Exception as e:
-            st.error(f"Error al generar el PDF: {e}")
+# ========== BOTÓN DESCARGAR PDF ==========
+if col1.button("📄 Descargar PDF", key="descargar_pdf", use_container_width=True):
+    st.session_state.pdf_generating = True
 
-if col2.button("❌ Cerrar Caja", key="cerrar_caja"):
-    # Aquí podrías ejecutar la lógica de cierre de caja y registro correspondiente
-    # Ejemplo: resultado = cerrar_caja(usuario, datos)
-    with st.spinner("Cerrando caja..."):
-        try:
-            # ejecutar la función real de cierre de caja
-            # cerrar_caja()
-            st.success("Caja cerrada correctamente.")
-        except Exception as e:
-            st.error(f"Error al cerrar la caja: {e}")
+if st.session_state.pdf_generating:
+    try:
+        with st.spinner("⏳ Generando PDF..."):
+            # TODO: Implementar función real
+            # generar_pdf_y_descargar(ventas, total)
+            pass
+        
+        st.success("✅ PDF generado correctamente.")
+        st.session_state.pdf_generating = False
+        
+    except FileNotFoundError as e:
+        st.error(f"❌ Archivo no encontrado: {e}")
+        st.session_state.pdf_generating = False
+    except PermissionError as e:
+        st.error(f"❌ Permiso denegado: {e}")
+        st.session_state.pdf_generating = False
+    except Exception as e:
+        st.error(f"❌ Error al generar el PDF: {str(e)}")
+        st.session_state.pdf_generating = False
+
+# ========== BOTÓN CERRAR CAJA ==========
+if col2.button("❌ Cerrar Caja", key="cerrar_caja", use_container_width=True):
+    st.session_state.caja_closing = True
+
+if st.session_state.caja_closing:
+    try:
+        with st.spinner("⏳ Cerrando caja..."):
+            # TODO: Implementar función real
+            # resultado = cerrar_caja_service(usuario_id, total)
+            pass
+        
+        st.success("✅ Caja cerrada correctamente.")
+        st.session_state.caja_closing = False
+        
+        # Opcional: Limpiar sesión después de cerrar caja
+        # st.session_state.clear()
+        # st.switch_page("streamlit_app.py")
+        
+    except ValueError as e:
+        st.error(f"❌ Valor inválido: {e}")
+        st.session_state.caja_closing = False
+    except RuntimeError as e:
+        st.error(f"❌ Error en operación: {e}")
+        st.session_state.caja_closing = False
+    except Exception as e:
+        st.error(f"❌ Error al cerrar la caja: {str(e)}")
+        st.session_state.caja_closing = False
