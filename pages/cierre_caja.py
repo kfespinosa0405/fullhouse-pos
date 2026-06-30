@@ -16,13 +16,13 @@ if not st.session_state.get("logueado", False):
     st.switch_page("streamlit_app.py")
 
 # ==================================
-# ESTILOS
+# CONFIG
 # ==================================
 
 ocultar_menu_streamlit()
 
 # ==================================
-# MENÚ LATERAL
+# SIDEBAR
 # ==================================
 
 with st.sidebar:
@@ -31,8 +31,6 @@ with st.sidebar:
         "logo_fullhouse.jpeg",
         use_container_width=True
     )
-
-    st.markdown("## FULL HOUSE POS")
 
     if st.button(
         "📍 Mapa Restaurante",
@@ -54,21 +52,19 @@ st.divider()
 
 ventas = ventas_del_dia()
 
+total = 0
+
 if not ventas:
 
     st.info("No existen ventas registradas hoy.")
 
 else:
 
-    total = 0
+    encabezado = st.columns([1,3,1])
 
-    st.subheader("Ventas del día")
-
-    cab1, cab2, cab3 = st.columns([1,3,1])
-
-    cab1.markdown("**Pedido**")
-    cab2.markdown("**Fecha / Hora**")
-    cab3.markdown("**Total**")
+    encabezado[0].markdown("**Pedido**")
+    encabezado[1].markdown("**Fecha**")
+    encabezado[2].markdown("**Total**")
 
     st.divider()
 
@@ -82,30 +78,32 @@ else:
 
         total += monto
 
-    st.divider()
+st.divider()
 
-    st.metric(
-        "TOTAL DEL DÍA",
-        f"${total:.2f}"
-    )
+st.metric(
+    "TOTAL DEL DÍA",
+    f"${total:.2f}"
+)
 
-    st.write("")
+st.divider()
 
-    col1, col2 = st.columns(2)
+st.subheader("Opciones")
 
-    with col1:
+col1, col2 = st.columns(2)
 
-        if st.button(
-            "📄 Descargar PDF",
-            use_container_width=True,
-            type="primary"
-        ):
-            st.info("Aquí generaremos el PDF del cierre de caja.")
+with col1:
 
-    with col2:
+    if st.button(
+        "📄 Descargar PDF",
+        use_container_width=True,
+        type="primary"
+    ):
+        st.success("Aquí se generará el PDF.")
 
-        if st.button(
-            "❌ Cerrar Caja",
-            use_container_width=True
-        ):
-            st.success("Caja cerrada correctamente.")
+with col2:
+
+    if st.button(
+        "❌ Cerrar Caja",
+        use_container_width=True
+    ):
+        st.success("Caja cerrada correctamente.")
