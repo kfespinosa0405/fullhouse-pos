@@ -68,9 +68,6 @@ def abrir_pedido(nombre):
     )
 
 
-# ==================================
-# TÍTULO
-# ==================================
 
 # ==================================
 # SIDEBAR
@@ -79,12 +76,6 @@ def abrir_pedido(nombre):
 col_menu, col_main = st.columns([1, 4])
 
 with col_menu:
-
-    st.markdown("""
-    # FULL HOUSE
-
-    **FOOD • DRINKS • VIBES**
-    """)
 
     if st.button(
         "📍 Mapa Restaurante",
