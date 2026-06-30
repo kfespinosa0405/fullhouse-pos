@@ -1,5 +1,4 @@
 from services.ui_config import ocultar_menu_streamlit
-
 import streamlit as st
 from datetime import datetime
 
