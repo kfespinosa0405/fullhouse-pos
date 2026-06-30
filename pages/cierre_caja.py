@@ -105,3 +105,19 @@ else:
         "TOTAL DEL DÍA",
         f"${total:.2f}"
     )
+    st.divider()
+    col1, col2 = st.columns(2)
+    with col1:
+        st.button(
+            "📄 Descargar PDF",
+            use_container_width=True,
+            key="btn_pdf"
+        )
+    with col2:
+        if st.button(
+            "❌ Cerrar Caja",
+            use_container_width=True,
+            key="btn_cerrar"
+        ):
+    st.success("Caja cerrada correctamente.")
+
