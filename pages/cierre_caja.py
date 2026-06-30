@@ -93,8 +93,22 @@ col1, col2 = st.columns(2)
 # Usar los botones de las columnas para que se rendericen correctamente dentro de cada columna
 if col1.button("📄 Descargar PDF", key="descargar_pdf"):
     # Aquí podrías llamar a la función que genere y descargue el PDF
-    st.success("Aquí se generará el PDF.")
+    # Ejemplo: generar_pdf_y_descargar(datos)
+    with st.spinner("Generando PDF..."):
+        try:
+            # llamar a la función real para generar y descargar el PDF
+            # generar_pdf_y_descargar(ventas, total)
+            st.success("PDF generado y listo para descargar (placeholder).")
+        except Exception as e:
+            st.error(f"Error al generar el PDF: {e}")
 
 if col2.button("❌ Cerrar Caja", key="cerrar_caja"):
     # Aquí podrías ejecutar la lógica de cierre de caja y registro correspondiente
-    st.success("Caja cerrada correctamente.")
+    # Ejemplo: resultado = cerrar_caja(usuario, datos)
+    with st.spinner("Cerrando caja..."):
+        try:
+            # ejecutar la función real de cierre de caja
+            # cerrar_caja()
+            st.success("Caja cerrada correctamente.")
+        except Exception as e:
+            st.error(f"Error al cerrar la caja: {e}")
