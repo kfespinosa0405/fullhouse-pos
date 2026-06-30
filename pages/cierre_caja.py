@@ -40,7 +40,7 @@ ocultar_menu_streamlit()
 with st.sidebar:
 
     st.image(
-        "assets/logo_fullhouse.jpeg",
+        "logo_fullhouse.jpeg",
         use_container_width=True
     )
 
