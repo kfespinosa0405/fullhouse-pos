@@ -90,19 +90,11 @@ st.subheader("Opciones")
 
 col1, col2 = st.columns(2)
 
-with col1:
+# Usar los botones de las columnas para que se rendericen correctamente dentro de cada columna
+if col1.button("📄 Descargar PDF", key="descargar_pdf"):
+    # Aquí podrías llamar a la función que genere y descargue el PDF
+    st.success("Aquí se generará el PDF.")
 
-    if st.button(
-        "📄 Descargar PDF",
-        use_container_width=True,
-        type="primary"
-    ):
-        st.success("Aquí se generará el PDF.")
-
-with col2:
-
-    if st.button(
-        "❌ Cerrar Caja",
-        use_container_width=True
-    ):
-        st.success("Caja cerrada correctamente.")
+if col2.button("❌ Cerrar Caja", key="cerrar_caja"):
+    # Aquí podrías ejecutar la lógica de cierre de caja y registro correspondiente
+    st.success("Caja cerrada correctamente.")
