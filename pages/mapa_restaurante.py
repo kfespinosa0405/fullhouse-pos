@@ -76,27 +76,15 @@ def abrir_pedido(nombre):
 # SIDEBAR
 # ==================================
 
-with st.sidebar:
+col_menu, col_main = st.columns([1, 4])
+
+with col_menu:
 
     st.markdown("""
-    <h1 style='
-    text-align:center;
-    color:white;
-    margin-bottom:0;
-    '>
-    FULL HOUSE
-    </h1>
+    # FULL HOUSE
 
-    <p style='
-    text-align:center;
-    color:#ff0000;
-    letter-spacing:4px;
-    '>
-    FOOD • DRINKS • VIBES
-    </p>
-    """, unsafe_allow_html=True)
-
-
+    **FOOD • DRINKS • VIBES**
+    """)
 
     if st.button(
         "📍 Mapa Restaurante",
@@ -112,16 +100,11 @@ with st.sidebar:
             "pages/cierre_caja.py"
         )
 
-st.title(
-    "FULL HOUSE POS"
-)
+with col_main:
 
-st.subheader(
-    "Mapa del Restaurante"
-)
-
-st.divider()
-
+    st.title("FULL HOUSE POS")
+    st.subheader("Mapa del Restaurante")
+    st.divider()
 
 # ==================================
 # DISTRIBUCIÓN ORIGINAL
