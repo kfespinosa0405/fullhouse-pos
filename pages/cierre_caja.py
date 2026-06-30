@@ -119,5 +119,5 @@ else:
             use_container_width=True,
             key="btn_cerrar"
         ):
-    st.success("Caja cerrada correctamente.")
+            st.success("Caja cerrada correctamente.")
 
