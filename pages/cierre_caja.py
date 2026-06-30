@@ -54,11 +54,11 @@ st.write(datetime.now().strftime("%d/%m/%Y"))
 
 st.divider()
 
-# Inicializar estados de sesión
-if "pdf_generated" not in st.session_state:
-    st.session_state.pdf_generated = False
-if "caja_closed" not in st.session_state:
-    st.session_state.caja_closed = False
+# Inicializar estados de sesión - SOLO UNA VEZ al inicio
+if "pdf_loading" not in st.session_state:
+    st.session_state.pdf_loading = False
+if "caja_loading" not in st.session_state:
+    st.session_state.caja_loading = False
 
 ventas = ventas_del_dia()
 
@@ -103,17 +103,19 @@ col1, col2 = st.columns(2)
 
 # ========== CALLBACK DESCARGAR PDF ==========
 def generar_pdf_callback():
-    """Callback para generar PDF"""
+    """Callback para generar PDF - se ejecuta UNA SOLA VEZ"""
+    st.session_state.pdf_loading = True
+    
     try:
-        # Simulación de generación
         logger.info("Iniciando generación de PDF...")
         
         # TODO: Implementar función real
         # from services.pdf_service import generar_pdf_y_descargar
         # generar_pdf_y_descargar(ventas, total)
         
-        st.session_state.pdf_generated = True
+        # Simulación de éxito
         logger.info("PDF generado exitosamente")
+        st.success("✅ PDF generado correctamente.")
         
     except FileNotFoundError as e:
         logger.error(f"Archivo no encontrado: {e}")
@@ -124,10 +126,14 @@ def generar_pdf_callback():
     except Exception as e:
         logger.error(f"Error inesperado: {e}")
         st.error(f"❌ Error al generar el PDF: {str(e)}")
+    finally:
+        st.session_state.pdf_loading = False
 
 # ========== CALLBACK CERRAR CAJA ==========
 def cerrar_caja_callback():
-    """Callback para cerrar caja"""
+    """Callback para cerrar caja - se ejecuta UNA SOLA VEZ"""
+    st.session_state.caja_loading = True
+    
     try:
         logger.info("Iniciando cierre de caja...")
         
@@ -135,8 +141,14 @@ def cerrar_caja_callback():
         # from services.caja_service import cerrar_caja_service
         # resultado = cerrar_caja_service(st.session_state.usuario_id, total)
         
-        st.session_state.caja_closed = True
+        # Simulación de éxito
         logger.info("Caja cerrada exitosamente")
+        st.success("✅ Caja cerrada correctamente.")
+        
+        # Opcional: Redireccionar después de cerrar
+        # import time
+        # time.sleep(2)
+        # st.switch_page("streamlit_app.py")
         
     except ValueError as e:
         logger.error(f"Valor inválido: {e}")
@@ -147,35 +159,24 @@ def cerrar_caja_callback():
     except Exception as e:
         logger.error(f"Error inesperado: {e}")
         st.error(f"❌ Error al cerrar la caja: {str(e)}")
+    finally:
+        st.session_state.caja_loading = False
 
 # ========== BOTONES CON CALLBACKS ==========
+# Los callbacks se ejecutan ANTES de que el script continúe
 
-btn_pdf = col1.button(
+col1.button(
     "📄 Descargar PDF",
     key="descargar_pdf",
     use_container_width=True,
-    on_click=generar_pdf_callback
+    on_click=generar_pdf_callback,
+    disabled=st.session_state.pdf_loading
 )
 
-btn_cerrar = col2.button(
+col2.button(
     "❌ Cerrar Caja",
     key="cerrar_caja",
     use_container_width=True,
-    on_click=cerrar_caja_callback
+    on_click=cerrar_caja_callback,
+    disabled=st.session_state.caja_loading
 )
-
-# ========== MOSTRAR RESULTADOS ==========
-
-if st.session_state.pdf_generated:
-    with st.spinner("⏳ Generando PDF..."):
-        st.success("✅ PDF generado correctamente.")
-    st.session_state.pdf_generated = False
-
-if st.session_state.caja_closed:
-    with st.spinner("⏳ Finalizando cierre..."):
-        st.success("✅ Caja cerrada correctamente.")
-    # Esperar un momento antes de limpiar
-    st.session_state.caja_closed = False
-    # st.balloons()  # Celebración opcional
-    # time.sleep(2)
-    # st.switch_page("streamlit_app.py")  # Redireccionar si deseas
