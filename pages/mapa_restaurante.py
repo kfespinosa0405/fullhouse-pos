@@ -21,19 +21,6 @@ if not st.session_state.get(
         "streamlit_app.py"
     )
 
-
-# ==================================
-# CONFIG
-# ==================================
-
-st.set_page_config(
-    page_title="FULL HOUSE POS",
-    page_icon="🍽️",
-    layout="wide"
-)
-
-ocultar_menu_streamlit()
-
 # ==================================
 # OCULTAR NAVEGACIÓN STREAMLIT
 # ==================================
